@@ -40,42 +40,43 @@ class AddEmployeeActivity : Activity() {
         }
 
         bCancel.setOnClickListener{
-
+            finish()
         }
 
     }
 
+
     private fun saveEmployee() {
-        var  isValid = true
 
-        etEmpName.error = if (etEmpName?.text.toString().isEmpty()){
+        var isValid = true
+
+        etEmpName.error = if (etEmpName?.text.toString().isEmpty()) {
             isValid = false
             "Required Field"
-        }else null
+        } else null
 
-        etDesignation.error = if (etDesignation?.text.toString().isEmpty()){
+        etDesignation.error = if (etDesignation?.text.toString().isEmpty()) {
             isValid = false
             "Required Field"
-        }else null
+        } else null
 
-        if (isValid){
-            val name:String = etEmpName?.text.toString()
-            val designation:String = etDesignation?.text.toString()
-            val dob:Long = myCalendar.timeInMillis
+        if (isValid) {
+            val name = etEmpName?.text.toString()
+            val designation = etDesignation?.text.toString()
+            val dob = myCalendar.timeInMillis
 
-           val db:SQLiteDatabase = databaseHelper.writableDatabase
+            val db = databaseHelper.writableDatabase
 
             val values = ContentValues()
-            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_NAME,name)
-            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_DESIGNATION,designation)
-            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_DESIGNATION,dob)
+            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_NAME, name)
+            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_DESIGNATION, designation)
+            values.put(GloboMedDbContract.EmployeeEntry.COLUMN_DOB, dob)
 
-
-            val result :Long =      db.insert(GloboMedDbContract.EmployeeEntry.TABLE_NAME,null,values)
+            val result = db.insert(GloboMedDbContract.EmployeeEntry.TABLE_NAME, null, values)
 
             setResult(RESULT_OK, Intent())
 
-            Toast.makeText(applicationContext,"Employee Added",Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "Employee Added", Toast.LENGTH_SHORT).show()
         }
 
         finish()
